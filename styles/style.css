@@ -126,3 +126,15 @@ section {
     border-bottom-color: var(--clr-pri);
 }
 /* --- EPISODE GRID END --- */
+
+/* --- EPISODE CONTENT START --- */
+.bonus-section-label {
+    margin: 6rem 0 1.5rem 0;
+}
+.bonus-item {
+    margin: 1.5rem 0 3.5rem 0;
+}
+.bonus-img {
+    width: 100%;
+}
+/* --- EPISODE CONTENT END --- */

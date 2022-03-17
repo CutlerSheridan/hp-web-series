@@ -17,6 +17,8 @@ Harry Potter goes to therapy??  Six years after defeating the greatest dark wiza
 ##### Maybe
 
 #### DONE
+- *0.1.0*
+- get bonus content auto-generating
 - *0.0.1*
 - create three pages
 - start styling

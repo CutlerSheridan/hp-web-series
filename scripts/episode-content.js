@@ -5,8 +5,16 @@ const model = (() => {
             desc: "Harry tries to talk about the quidditch toys he's building for his future child while Aquila fights to keep him on topic.",
             link: "https://www.youtube.com/embed/Mz2YrzyT_iU",
             bonusContent: [
-                "Placeholder text about some bonus content",
-
+                {
+                    bonusDesc: "Placeholder text describing the following image.",
+                    type: "vid",
+                    link: "https://www.youtube.com/embed/Mz2YrzyT_iU",
+                },
+                {
+                    bonusDesc: "This is more placeholder text for the next part",
+                    type: "img",
+                    link: "../images/leo.jpg",
+                }
             ]
         },
         {
@@ -71,26 +79,57 @@ const view = (() => {
     const content = document.querySelector(".content");
 
     const createEpisodeSection = (epNum) => {
-        const episodeSectionFragment = document.createDocumentFragment();
+        const episodeSection = document.createElement("section");
         const episodeNumberLabel = document.createElement("h3");
         episodeNumberLabel.textContent = `- Episode ${epNum} -`;
         const episodeTitle = document.createElement("h1");
-        episodeTitle.textContent = `"${model.episodes[epNum - 1].title}`;
+        episodeTitle.textContent = `"${model.episodes[epNum - 1].title}"`;
         const episodeDesc = document.createElement("p");
         episodeDesc.classList.add("episode-desc");
         episodeDesc.textContent = model.episodes[epNum - 1].desc;
+        const episodeVideo = document.createElement("iframe");
+        episodeVideo.src = model.episodes[epNum - 1].link;
+        episodeVideo.frameBorder = 0;
 
-        episodeSectionFragment.append(
+        episodeSection.append(
                 episodeNumberLabel,
                 episodeTitle,
                 episodeDesc,
-                // episodeLink,
-                createBonusContentElements(epNum),
+                episodeVideo,
+                createBonusContentElements(epNum - 1),
             );
-        return episodeSectionFragment;
+        return episodeSection;
     }
-    const createBonusContentElements = (epNum) => {
+    const createBonusContentElements = (epIndex) => {
+        const fragment = document.createDocumentFragment();
+        const bonusSectionLabel = document.createElement("h2");
+        bonusSectionLabel.textContent = "Bonus Content";
+        bonusSectionLabel.classList.add("bonus-section-label");
+        fragment.append(bonusSectionLabel);
 
+        model.episodes[epIndex].bonusContent.forEach(bonus => {
+            const bonusDesc = document.createElement("p");
+            bonusDesc.classList.add("bonus-desc");
+            bonusDesc.textContent = bonus.bonusDesc;
+            let bonusItem = "";
+            switch (bonus.type) {
+                case "vid":
+                    bonusItem = document.createElement("iframe");
+                    bonusItem.frameBorder = 0;
+                    bonusItem.src = bonus.link;
+                    break;
+                case "img":
+                    bonusItem = document.createElement("img");
+                    bonusItem.classList.add("bonus-img");
+                    bonusItem.src = bonus.link;
+                    // bonusItem.style.backgroundImage = `url("${bonus.link}")`;
+                    console.log("it does get here");
+                    break;
+            }
+            bonusItem.classList.add("bonus-item");
+            fragment.append(bonusDesc, bonusItem);
+        });
+        return fragment;
     }
     const clearContent = () => {
         if (content) {
